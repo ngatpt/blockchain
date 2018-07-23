@@ -1,7 +1,7 @@
 var express = require("express");  
 var app = express(); 
 var server = require("http").createServer(app);
-server.listen(8080);
+server.listen(3000);
 // var io = require("socket.io")(server);
 
 var Web3 = require("web3");
@@ -25,6 +25,21 @@ app.get("/info/:userid", function(req, res){
 	  con.query("SELECT * FROM users INNER JOIN address ON users.userid = address.userid WHERE users.userid = " + userid, function (err, result) {
 	    if (err) console.log(err);
 	    res.send(result);
+	  });
+	});
+})
+
+app.get("/walletFeed", function(req, res){
+	var vallet = [];
+	con.connect(function(err) {
+	  if (err) console.log(err);
+	  con.query("SELECT * FROM coins", function (err, result, fields) {
+	    if (err) console.log(err);
+		//get info trans by hash
+		result.forEach(function(element) {
+			vallet.push({address: element.address, balance: element.blance});			
+		});
+		res.send(vallet);
 	  });
 	});
 })
@@ -137,7 +152,5 @@ app.get("/sendTransaction", function(req, res){
 	});	
 	res.send("OK");	
 })
-
-// app.get("/getTransactionByHash", )
 
 

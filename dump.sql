@@ -19,11 +19,12 @@ CREATE TABLE IF NOT EXISTS `users` (
 
 
 CREATE TABLE IF NOT EXISTS `address` (
-  `addid` int(11) NOT NULL primary key AUTO_INCREMENT,
-  `address` varchar(120) DEFAULT NULL,
+  `address` varchar(120) NOT NULL,
+  -- `addid` int(11) NOT NULL AUTO_INCREMENT, 
   `balance` varchar(200) DEFAULT NULL,
   `pass_add` varchar(200) DEFAULT NULL,
   `userid` varchar(200) DEFAULT NULL,
+  PRIMARY KEY (address),
   FOREIGN KEY (userid) REFERENCES users(userid)
 );
 
@@ -33,8 +34,8 @@ CREATE TABLE IF NOT EXISTS `trans` (
   `add_from` varchar(200) DEFAULT NULL,
   `add_to` varchar(200) DEFAULT NULL,
   `value` varchar(200) DEFAULT NULL,
-  FOREIGN KEY (add_from) REFERENCES address(addid),
-  FOREIGN KEY (add_to) REFERENCES address(addid)
+  FOREIGN KEY (add_from) REFERENCES address(address),
+  FOREIGN KEY (add_to) REFERENCES address(address)
 );
 
 

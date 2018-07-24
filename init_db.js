@@ -28,13 +28,13 @@ app.get("/", function(req, res){
 
 	// var acc_infos = new Array();
 	con.connect(function(err) {
-		if (err) throw err;
+		if (err)console.log(err);
 		accounts.forEach(function(account){
 			blance = web3.eth.getBalance(account).toNumber();
 			Eth = web3.fromWei(blance, "ether");
 			console.log(Eth);
-			// var sql = "INSERT INTO coins (address, blance) VALUES (" + "'" + account + "'" + "," + "'" + Eth + "'" + ")";
-			var sql = "UPDATE coins SET blance = '" + Eth + "' WHERE address = '" + account + "'";
+			var sql = "INSERT INTO coins (address, blance) VALUES (" + "'" + account + "'" + "," + "'" + Eth + "'" + ")";
+			// var sql = "UPDATE coins SET blance = '" + Eth + "' WHERE address = '" + account + "'";
 		  	con.query(sql, function (err, result) {
 			    if (err) throw err;
 			    console.log(result.affectedRows + " record(s) updated");
